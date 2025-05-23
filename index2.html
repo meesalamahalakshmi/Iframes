@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Iframe Concepts Interactive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f6f6f6;
+    }
+    .iframe-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+    }
+    iframe {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #333;
+      margin-bottom: 20px;
+      background: white;
+    }
+    .controls button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 1rem;
+      background-color: hsl(208, 76%, 53%);
+      cursor: pointer;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+    .controls button:hover {
+      background-color: hsl(208, 86%, 43%);
+    }
+    .bookmarks {
+      margin: 20px 0 30px 0;
+    }
+    .bookmarks a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: hsl(208, 76%, 53%);
+      font-weight: bold;
+    }
+    .bookmarks a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bookmarks">
+    <a href="#img1">Bookmark 1 Image</a>
+    <a href="#media">Bookmark 2 Media</a>
+    <a href="#nest">Bookmark 3 Nested</a>
+  </div>
+
+
+  <div class="iframe-container" id="img1">
+    <h2>Image Iframe</h2>
+    <div class="controls">
+    <button onclick="imageiframe('image')">Show Image</button>
+</div>
+    <iframe srcdoc='<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400" style="width:100%;height:100%;">'></iframe>
+  </div>
+
+
+</div>
+  
+  <div class="iframe-container" id="media">
+    <h2>Media Iframes</h2>
+    <div class="controls">
+      <button onclick="showIframe('image')">Show Image</button>
+      <button onclick="showIframe('audio')">Show Audio</button>
+      <button onclick="showIframe('video')">Show Video</button>
+      
+    </div>
+    <div id="mediaIframes">
+      <iframe id="iframe-image" style="display:none;"></iframe>
+      <iframe id="iframe-audio" style="display:none;"></iframe>
+      <iframe id="iframe-video" style="display:none;"></iframe>
+      
+    </div>
+    <div class="controls" style="margin-top:15px;"> <br><br>
+      <a href="https://www.example.com" target="_blank">Visit Example.com</a>
+    </div>
+  </div><br><br>
+
+  <div class="iframe-container" id="nest">
+    <iframe style="height:300px;" srcdoc='
+      <html>
+        <body style="font-family: Arial; text-align:center;">
+          <iframe srcdoc="&lt;html&gt;&lt;body style=&quot;font-family: Arial;&quot;&gt;
+            &lt;p&gt;This is the &lt;strong&gt;Child Iframe&lt;/strong&gt; content.&lt;/p&gt;
+            &lt;iframe src=&quot;https://www.example.com&quot; width=&quot;100%&quot; height=&quot;100&quot; style=&quot;border:1px solid #888;&quot;&gt;&lt;/iframe&gt;
+          &lt;/body&gt;&lt;/html&gt;></iframe>
+        </body>
+      </html>
+    '></iframe>
+  </div>
+
+
+  <script>
+
+    const iframeContents = {
+      image: `<img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=300" style="width:100%;">`,
+      audio: `<audio controls style="width:100%;">
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+              </audio>`,
+      video: `<video controls style="width:100%;max-height:180px;">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+              </video>`
+    };
+
+    
+    function showIframe(type) {
+      ['image', 'audio', 'video'].forEach(t => {
+        const iframe = document.getElementById('iframe-' + t);
+        if (type === t) {
+          iframe.style.display = '';
+          iframe.srcdoc = iframeContents[t];
+        } else {
+          iframe.style.display = 'none';
+          iframe.srcdoc = '';
+        }
+      }); 
+    }
+  </script>
+</body>
+</html>
